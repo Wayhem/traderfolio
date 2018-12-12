@@ -1,0 +1,17 @@
+{
+  "name": "traderfolio",
+  "version": "1.0.0",
+  "description": "A personal portfolio for cryptocurrency traders",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "Trading",
+    "ETH",
+    "BTC",
+    "Cryptocurrencies"
+  ],
+  "author": "Jose Villarroel",
+  "license": "MIT"
+}
