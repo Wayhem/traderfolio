@@ -25,6 +25,13 @@ a, a:hover, a:focus {
     align-items: stretch;
 }
 
+.text-simple {
+    color: #fff;
+}
+
+.balance-text {
+    color: #585864;
+}
 #sidebar {
     min-width: 250px;
     max-width: 250px;
@@ -52,7 +59,12 @@ a[data-toggle="collapse"] {
 
 #sidebar .sidebar-header {
     padding: 20px;
-    background: #41404E;
+    background: #2C2C38;
+}
+
+.card {
+    background-image: linear-gradient(135deg, #51515D , #41414D);
+    border: white;
 }
 
 #sidebar ul.components {
