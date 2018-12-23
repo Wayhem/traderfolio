@@ -106,14 +106,42 @@ ul ul a {
     display: flex;
     justify-content: center;
     align-items: center;
+    display: none;
 }
 
 .modal-content {
     width: 31.25rem;
     height: 18.75rem;
-    background-color: white;
+    background-color: gray;
     align-items: center;
     padding: 1.25rem;
+    text-align: center;
+    position: relative;
+}
+
+.modal-input {
+    width: 50%;
+    display: block;
+    margin: 1rem auto;
+}
+
+.modal-form {
+    width: 100%
+}
+
+.close {
+    position: absolute;
+    top: 0;
+    right: 1rem;
+    font-size: 2rem;
+    transform: rotate(45deg);
+    padding-top: 0.3rem;
+    cursor: pointer;
+}
+
+#addButton {
+    position: absolute;
+    right: 27%;
 }
 
 
