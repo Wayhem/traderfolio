@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import {hot} from "react-hot-loader";
-import Sidebar from "./components/Sidebar"
+import Sidebar from "./components/Sidebar";
+import Content from "./components/Content";
+import Modal from "./components/Modal";
 import "./App.css";
 
 class App extends Component{
@@ -8,6 +10,8 @@ class App extends Component{
     return(
       <div className="wrapper">
         <Sidebar />
+        <Content />
+        <Modal />
       </div>
     );
   }
