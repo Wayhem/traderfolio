@@ -10,7 +10,7 @@ class Content extends Component{
 
     render(){
         return(
-            <div id="content">
+            <div id="content" className="ml-3">
             <nav className="navbar navbar-expand-lg navbar-light pt-4">
                 <div className="container-fluid">
         

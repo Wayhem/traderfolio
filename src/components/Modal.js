@@ -4,16 +4,10 @@ import './Modal.css';
 
 class Modal extends Component {
 
-    closeModal = () => {
-        document.querySelector('.bg-modal').style.display = 'none';
-        let inputs = Array.from(document.querySelectorAll('.modal-input'));
-        inputs.forEach(el => el.value = '');
-    }
-
     render() {
-        return <div className="bg-modal"> 
+        return <div className="bg-modal hidden"> 
             <div className="modal-content">
-                <div className="close" onClick={this.closeModal}>+</div>
+                <div className="close" onClick={this.props.handleModal}>+</div>
                 <Blockchain />
                 <form className="modal-form">
                     <input id="input" className="modal-input Input-text" type="text" placeholder="BTC, ETH, or.."></input>

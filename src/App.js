@@ -6,12 +6,18 @@ import Modal from "./components/Modal";
 import "./App.css";
 
 class App extends Component{
+  handleModal = (e) => {
+    e.preventDefault();
+    document.querySelector('.bg-modal').classList.toggle('hidden');
+    document.querySelector('.bg-modal').classList.toggle('visible');
+  }
+
   render(){
     return(
       <div className="wrapper">
-        <Sidebar />
+        <Sidebar handleModal={this.handleModal} />
         <Content />
-        <Modal />
+        <Modal handleModal={this.handleModal} />
       </div>
     );
   }
