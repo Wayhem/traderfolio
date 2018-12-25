@@ -10,11 +10,33 @@ import "./App.css";
 
 class App extends Component{
   handleModal = (e) => {
-    e.preventDefault();
+    if (e) {
+      e.preventDefault();
+    }
     document.querySelector('.bg-modal').classList.toggle('hidden');
     document.querySelector('.bg-modal').classList.toggle('visible');
     let inputs = Array.from(document.querySelectorAll('.modal-input'));
     inputs.forEach(el => el.value = '');
+  }
+
+  state = {
+    balance : new Map()
+  }
+
+  getInput = (modal, e) => {
+    e.preventDefault();
+    const inputs = modal.getInput();
+    this.setInputs(inputs);
+    this.handleModal();
+  }
+
+  setInputs = (inputs) => {
+    const balance = this.state.balance;
+    if(balance.get(inputs.ticker)) {
+      inputs.amount += balance.get(inputs.ticker)
+    }
+    balance.set(inputs.ticker, inputs.amount);
+    this.setState({ balance });
   }
 
   render(){
@@ -29,7 +51,7 @@ class App extends Component{
                 <div className="modal-content">
                   <div className="close" onClick={(e) => {this.handleModal(e); modal.cleanState();}}>+</div>
                   <Blockchain />
-                  <form className="modal-form" onSubmit={modal.getInput}>
+                  <form className="modal-form" onSubmit={(e) => this.getInput(modal, e)}>
                       <input 
                           id="input" 
                           className="modal-input Input-text" 
@@ -42,7 +64,9 @@ class App extends Component{
                       <input 
                           id="input2" 
                           className="modal-input Input-text" 
-                          type="text" 
+                          type="number"
+                          min="0"
+                          step="0.01" 
                           placeholder="Amount" 
                           value={modal.state.amount}
                           onChange={e => modal.setState({ amount: e.target.value })}
