@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Card from './Card';
 
 class Content extends Component{
 
@@ -8,9 +9,21 @@ class Content extends Component{
         });
     }
 
+    componentDidUpdate() {
+        this.render();
+    }
+
+    renderCards = () => {
+        let items = [];
+        this.props.balance.forEach((value, key) => {
+            items.push(<Card key={key} ticker={key} value={value} />);
+        })
+        return items;
+    }
+
     render(){
         return(
-            <div id="content" className="ml-3">
+            <div id="content" className="ml-3 container">
             <nav className="navbar navbar-expand-lg navbar-light pt-4">
                 <div className="container-fluid">
         
@@ -24,11 +37,7 @@ class Content extends Component{
             <div className="container-fluid pt-2">
                 <h5 className="balance-text">Balance</h5>
                 <h1 className="text-simple">$30000</h1>
-                <div className="card" style={{width: '18rem'}}>
-                    <div className="card-body">
-                        <h5 className="card-title text-simple">Ethereum</h5>
-                    </div>
-                </div>
+                {this.renderCards()}
             </div>
         </div>    
         );

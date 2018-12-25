@@ -1,5 +1,6 @@
 import './Modal.css';
 import { Container } from 'unstated';
+import Swal from 'sweetalert2';
 
 class ModalContainer extends Container {
 
@@ -11,8 +12,15 @@ class ModalContainer extends Container {
     format(ticker, amount) {
         ticker = ticker.toUpperCase();
         amount = parseFloat(amount);
-
-        return { ticker, amount }
+        console.log(amount);
+        if (isNaN(amount)) {
+            Swal({
+                type: 'error',
+                title: 'Oops...',
+                text: 'Insert valid number!'
+            })
+        }
+            return { ticker, amount }
     }
 
     getInput = () => {

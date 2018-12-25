@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import {hot} from "react-hot-loader";
 import Sidebar from "./components/Sidebar";
 import Content from "./components/Content";
-import ModalContainer from "./components/ModalContainer";
+import ModalContainer from "./components/containers/ModalContainer";
 import { Provider, Subscribe } from 'unstated';
 import Blockchain from 'svg-react-loader?name=Blockchain!./images/blockchain.svg';
 import "./App.css";
@@ -26,8 +26,10 @@ class App extends Component{
   getInput = (modal, e) => {
     e.preventDefault();
     const inputs = modal.getInput();
-    this.setInputs(inputs);
-    this.handleModal();
+    if (!isNaN(inputs.amount)) {
+      this.setInputs(inputs);
+      this.handleModal();
+    }
   }
 
   setInputs = (inputs) => {
@@ -43,7 +45,7 @@ class App extends Component{
     return(
       <div className="wrapper">
         <Sidebar handleModal={this.handleModal} />
-        <Content />
+        <Content balance={this.state.balance} />
         <Provider>
           <Subscribe to={[ModalContainer]}>
             {modal => (
@@ -64,7 +66,7 @@ class App extends Component{
                       <input 
                           id="input2" 
                           className="modal-input Input-text" 
-                          type="number"
+                          type="text"
                           min="0"
                           step="0.01" 
                           placeholder="Amount" 
