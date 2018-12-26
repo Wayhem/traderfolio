@@ -16,7 +16,7 @@ class Content extends Component{
     renderCards = () => {
         let items = [];
         this.props.balance.forEach((value, key) => {
-            items.push(<Card key={key} ticker={key} value={value} />);
+            items.push(<Card key={key} ticker={this.props.api[key].FullName} value={value} imgUrl={this.props.api[key].ImageUrl} />);
         })
         return items;
     }

@@ -21,12 +21,13 @@ class App extends Component{
 
   state = {
     balance : new Map(),
-    allTickers: []
+    allTickers: [],
+    APIData: {}
   }
 
   getInput = (modal, e) => {
     e.preventDefault();
-    const inputs = modal.getInput(e);
+    const inputs = modal.getInput(this.state.allTickers);
     if (!isNaN(inputs.amount)) {
       this.setInputs(inputs);
       this.handleModal();
@@ -48,6 +49,8 @@ class App extends Component{
       .then(data => {
         this.state.allTickers = Object.keys(data.Data);
         console.log('ready');
+        this.state.APIData = data.Data;
+        console.log(this.state.APIData);
       });
   }
 
@@ -55,7 +58,7 @@ class App extends Component{
     return(
       <div className="wrapper">
         <Sidebar handleModal={this.handleModal} />
-        <Content balance={this.state.balance} />
+        <Content balance={this.state.balance} api={this.state.APIData} />
         <Provider>
           <Subscribe to={[ModalContainer]}>
             {modal => (
@@ -75,7 +78,7 @@ class App extends Component{
                           onKeyDown={e => modal.onKeyDown(e)}
                       />
                       <label htmlFor="input" className="Input-label">Ticker</label>
-                      {modal.renderSuggestions()}
+                      {modal.renderSuggestions(this.state.APIData)}
                       <input 
                           autoComplete="off"
                           id="input2" 

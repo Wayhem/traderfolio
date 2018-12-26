@@ -31,14 +31,17 @@ class ModalContainer extends Container {
         return { ticker, amount }
     }
 
-    getInput = (e) => {
+    getInput = (tickers) => {
         const inputs = this.format(this.state.ticker, this.state.amount);
+        if(!(this.exactSearch(inputs.ticker, tickers)[0] === inputs.ticker)){
+            inputs.amount = NaN;
+            Swal({
+                type: 'error',
+                title: 'Oops...',
+                text: 'Insert valid ticker!'
+            })
+        }
         if (this.state.filteredSuggestions.length){
-            // Swal(
-            //     'You\'ve selected ',
-            //     e.currentTarget.innerText,
-            //     'success'
-            // )
             this.setState({
             activeSuggestion: 0,
             filteredSuggestions: [],
@@ -72,7 +75,7 @@ class ModalContainer extends Container {
                     activeSuggestion: 0,
                     showSuggestions: false,
                     filteredSuggestions: [],
-                    ticker: filteredSuggestions[activeSuggestion]
+                    ticker: filteredSuggestions[activeSuggestion].split(' ')[0]
                 });
                 document.querySelector('#input2').focus();
             }
@@ -82,12 +85,14 @@ class ModalContainer extends Container {
               return;
             }
             this.setState({ activeSuggestion: activeSuggestion - 1 });
+            document.querySelector('.suggestion-active').scrollIntoView();
         }
         else if (e.keyCode === 40) {
             if (activeSuggestion - 1 === filteredSuggestions.length) {
                 return;
             }
             this.setState({ activeSuggestion: activeSuggestion + 1 });
+            document.querySelector('.suggestion-active').scrollIntoView();
         }
     }
 
@@ -98,7 +103,7 @@ class ModalContainer extends Container {
             activeSuggestion: 0,
             filteredSuggestions: [],
             showSuggestions: false,
-            ticker: e.currentTarget.innerText
+            ticker: e.currentTarget.innerText.split(' ')[0]
             });
             document.querySelector('#input2').focus();
         }
@@ -115,7 +120,17 @@ class ModalContainer extends Container {
         return results;
     }
 
-    renderSuggestions() {
+    exactSearch(input, tickers) {
+        let results = [];
+        for (const elem of tickers) {
+            if (elem.toUpperCase() == input.toUpperCase()) {
+                results.push(elem);
+            }
+        }
+        return results;
+    }
+
+    renderSuggestions(api) {
         const {
             onClick,
             state: {
@@ -146,7 +161,7 @@ class ModalContainer extends Container {
                         key={elem}
                         onClick={onClick}
                         >
-                        {elem}
+                        {elem} ({api[elem].CoinName})
                         </li>
                     );
                     })}
