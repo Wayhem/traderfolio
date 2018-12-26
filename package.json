@@ -4,8 +4,8 @@
   "description": "A personal portfolio for cryptocurrency traders",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack-dev-server --mode development"
+    "start": "webpack-dev-server --mode development",
+    "build": "webpack-dev-server --mode production"
   },
   "keywords": [
     "Trading",
@@ -26,13 +26,14 @@
     "react-hot-loader": "^4.6.3",
     "style-loader": "^0.23.1",
     "svg-react-loader": "^0.4.6",
-    "webpack": "^4.28.2",
+    "webpack": "^4.19.1",
     "webpack-cli": "^3.1.2",
-    "webpack-dev-server": "^3.1.13"
+    "webpack-dev-server": "^3.1.8"
   },
   "dependencies": {
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
+    "react-scripts": "^2.1.2",
     "sweetalert2": "^7.33.1",
     "unstated": "^2.1.1"
   }
