@@ -36,7 +36,7 @@ class Content extends Component{
             </nav>
             <div className="container-fluid pt-2">
                 <h5 className="balance-text">Balance</h5>
-                <h1 className="text-simple">$30000</h1>
+                <h1 id="balance" className="text-simple">$0</h1>
                 {this.renderCards()}
             </div>
         </div>    

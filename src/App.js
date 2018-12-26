@@ -22,7 +22,30 @@ class App extends Component{
   state = {
     balance : new Map(),
     allTickers: [],
-    APIData: {}
+    APIData: {},
+    bitDiff: 1
+  }
+
+  updateBalance() {
+    let keys = '';
+    Array.from(this.state.balance).forEach((el) => {
+      keys += (`${el[0]},`)
+    })
+    keys = keys.slice(0,keys.length - 1)
+    fetch(`https://min-api.cryptocompare.com/data/price?fsym=USD&tsyms=${keys}&api_key=89478ca7a91f171127019e9765351a5210193275be44cfda15279a290f9e128f`)
+      .then(res => res.json())
+      .then(data => {
+        this.showBalance(data);
+      });
+  }
+  
+  showBalance(data) {
+    let total = 0;
+    for (let [key, value] of Object.entries(data)) {
+      const amount = this.state.balance.get(key);
+      total += (amount/value);
+    }
+    document.getElementById('balance').textContent = `$${total.toFixed(2)} / ${(total*this.state.bitDiff).toFixed(8)} BTC`;
   }
 
   getInput = (modal, e) => {
@@ -31,6 +54,7 @@ class App extends Component{
     if (!isNaN(inputs.amount)) {
       this.setInputs(inputs);
       this.handleModal();
+      this.updateBalance();
     }
   }
 
@@ -51,6 +75,12 @@ class App extends Component{
         console.log('ready');
         this.state.APIData = data.Data;
         console.log(this.state.APIData);
+      });
+    fetch(`https://min-api.cryptocompare.com/data/price?fsym=USD&tsyms=BTC&api_key=89478ca7a91f171127019e9765351a5210193275be44cfda15279a290f9e128f`)
+      .then(res => res.json())
+      .then(data => {
+        this.state.bitDiff = data.BTC;
+        console.log(this.state.bitDiff);
       });
   }
 
