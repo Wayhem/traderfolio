@@ -37,7 +37,7 @@ class App extends Component{
       keys += (`${el[0]},`)
     })
     keys = keys.slice(0,keys.length - 1)
-    fetch(`https://min-api.cryptocompare.com/data/price?fsym=USD&tsyms=${keys}&api_key=89478ca7a91f171127019e9765351a5210193275be44cfda15279a290f9e128f`)
+    fetch(`https://min-api.cryptocompare.com/data/price?fsym=USD&tsyms=${keys}&api_key=${process.env.API_KEY}`)
       .then(res => res.json())
       .then(data => {
         this.showBalance(data);
@@ -93,19 +93,16 @@ class App extends Component{
   }
 
   componentDidMount() {
-    fetch('https://min-api.cryptocompare.com/data/all/coinlist?api_key=89478ca7a91f171127019e9765351a5210193275be44cfda15279a290f9e128f')
+    fetch(`https://min-api.cryptocompare.com/data/all/coinlist?api_key=${process.env.API_KEY}`)
       .then(res => res.json())
       .then(data => {
         this.state.allTickers = Object.keys(data.Data);
-        console.log('ready');
         this.state.APIData = data.Data;
-        console.log(this.state.APIData);
       });
-    fetch(`https://min-api.cryptocompare.com/data/price?fsym=USD&tsyms=BTC&api_key=89478ca7a91f171127019e9765351a5210193275be44cfda15279a290f9e128f`)
+    fetch(`https://min-api.cryptocompare.com/data/price?fsym=USD&tsyms=BTC&api_key=${process.env.API_KEY}`)
       .then(res => res.json())
       .then(data => {
         this.state.bitDiff = data.BTC;
-        console.log(this.state.bitDiff);
       });
   }
 
