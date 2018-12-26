@@ -151,3 +151,43 @@
       visibility 0ms,
       z-index 0ms;
   }
+
+  .no-suggestions {
+    color: white;
+    padding: 0.5rem;
+    position: absolute;
+  }
+  
+  .suggestions {
+    border: 1px solid #999;
+    border-top-width: 0;
+    list-style: none;
+    margin-top: 0;
+    max-height: 143px;
+    overflow-y: auto;
+    padding-left: 0;
+    width: 70%;
+    position: absolute;
+    z-index: 10;
+    background: white;
+    margin-bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
+    right: 5rem;
+  }
+  
+  .suggestions li {
+    padding: 0.5rem;
+  }
+  
+  .suggestion-active,
+  .suggestions li:hover {
+    background-color: #5264AE;
+    color: #fff;
+    cursor: pointer;
+    font-weight: 700;
+  }
+  
+  .suggestions li:not(:last-of-type) {
+    border-bottom: 1px solid #999;
+  }

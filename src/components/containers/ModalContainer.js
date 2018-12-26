@@ -1,35 +1,166 @@
 import './Modal.css';
 import { Container } from 'unstated';
 import Swal from 'sweetalert2';
+import React from 'react';
 
 class ModalContainer extends Container {
 
     state = {
         ticker: '',
-        amount: ''
+        amount: '',
+        activeSuggestion: 0,
+        filteredSuggestions: [],
+        showSuggestions: false
     }
 
     format(ticker, amount) {
-        ticker = ticker.toUpperCase();
-        amount = parseFloat(amount);
-        console.log(amount);
-        if (isNaN(amount)) {
-            Swal({
-                type: 'error',
-                title: 'Oops...',
-                text: 'Insert valid number!'
-            })
+        //handling empty input no swal 
+        if (amount) {
+            ticker = ticker.toUpperCase();
+            amount = parseFloat(amount);
+            if (isNaN(amount)) {
+                Swal({
+                    type: 'error',
+                    title: 'Oops...',
+                    text: 'Insert valid number!'
+                })
+            }
+        } else {
+            amount = NaN;
         }
-            return { ticker, amount }
+        return { ticker, amount }
     }
 
-    getInput = () => {
+    getInput = (e) => {
         const inputs = this.format(this.state.ticker, this.state.amount);
+        if (this.state.filteredSuggestions.length){
+            // Swal(
+            //     'You\'ve selected ',
+            //     e.currentTarget.innerText,
+            //     'success'
+            // )
+            this.setState({
+            activeSuggestion: 0,
+            filteredSuggestions: [],
+            showSuggestions: false
+            });
+        }
         return inputs;
     }
 
     cleanState = () => {
         this.setState({ticker: '', amount: ''})
+    }
+
+    onChange(e, tickers) {
+        const input = e.target.value;
+        const filteredSuggestions = this.search(input, tickers);
+        this.setState({ 
+            activeSuggestion: 0,
+            filteredSuggestions,
+            showSuggestions: true,
+            ticker: input
+        })
+    }
+
+    onKeyDown = (e) => {
+        const { activeSuggestion, filteredSuggestions } = this.state;
+        if (e.keyCode === 13) {
+            e.preventDefault();
+            if (this.state.filteredSuggestions.length){
+                this.setState({
+                    activeSuggestion: 0,
+                    showSuggestions: false,
+                    filteredSuggestions: [],
+                    ticker: filteredSuggestions[activeSuggestion]
+                });
+                document.querySelector('#input2').focus();
+            }
+        }
+        else if (e.keyCode === 38) {
+            if (activeSuggestion === 0) {
+              return;
+            }
+            this.setState({ activeSuggestion: activeSuggestion - 1 });
+        }
+        else if (e.keyCode === 40) {
+            if (activeSuggestion - 1 === filteredSuggestions.length) {
+                return;
+            }
+            this.setState({ activeSuggestion: activeSuggestion + 1 });
+        }
+    }
+
+    onClick = e => {
+        e.preventDefault();
+        if (this.state.filteredSuggestions.length){
+            this.setState({
+            activeSuggestion: 0,
+            filteredSuggestions: [],
+            showSuggestions: false,
+            ticker: e.currentTarget.innerText
+            });
+            document.querySelector('#input2').focus();
+        }
+      };
+
+
+    search(input, tickers) {
+        let results = [];
+        for (const elem of tickers) {
+            if (elem.substr(0, input.length).toUpperCase() == input.toUpperCase()) {
+                results.push(elem);
+            }
+        }
+        return results;
+    }
+
+    renderSuggestions() {
+        const {
+            onClick,
+            state: {
+              activeSuggestion,
+              filteredSuggestions,
+              showSuggestions,
+              ticker
+            }
+        } = this;
+      
+        let suggestionsListComponent;
+      
+        if (showSuggestions && ticker) {
+            if (filteredSuggestions.length) {
+                suggestionsListComponent = (
+                <ul className="suggestions">
+                    {filteredSuggestions.map((elem, index) => {
+                    let className;
+
+                    // Flag the active suggestion with a class
+                    if (index === activeSuggestion) {
+                        className = "suggestion-active";
+                    }
+
+                    return (
+                        <li
+                        className={className}
+                        key={elem}
+                        onClick={onClick}
+                        >
+                        {elem}
+                        </li>
+                    );
+                    })}
+                </ul>
+                );
+            } else {
+                suggestionsListComponent = (
+                <div className="no-suggestions">
+                    <em>No results!</em>
+                </div>
+                );
+            }
+        }
+        return suggestionsListComponent;
     }
 }
 
