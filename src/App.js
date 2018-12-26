@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from "react";
 import {hot} from "react-hot-loader";
+import Swal from 'sweetalert2';
 import Sidebar from "./components/Sidebar";
 import Content from "./components/Content";
 import ModalContainer from "./components/containers/ModalContainer";
@@ -9,9 +10,12 @@ import "./App.css";
 
 
 class App extends Component{
-  handleModal = (e) => {
+  handleModal = (e, type) => {
     if (e) {
       e.preventDefault();
+    }
+    if (type) {
+      this.state.actionType = type;
     }
     document.querySelector('.bg-modal').classList.toggle('hidden');
     document.querySelector('.bg-modal').classList.toggle('visible');
@@ -23,7 +27,8 @@ class App extends Component{
     balance : new Map(),
     allTickers: [],
     APIData: {},
-    bitDiff: 1
+    bitDiff: 1,
+    actionType: 0
   }
 
   updateBalance() {
@@ -44,7 +49,8 @@ class App extends Component{
     for (let [key, value] of Object.entries(data)) {
       const amount = this.state.balance.get(key);
       total += (amount/value);
-    }
+    } 
+    isNaN(total) ? total = 0 : total = total;
     document.getElementById('balance').textContent = `$${total.toFixed(2)} / ${(total*this.state.bitDiff).toFixed(8)} BTC`;
   }
 
@@ -60,11 +66,30 @@ class App extends Component{
 
   setInputs = (inputs) => {
     const balance = this.state.balance;
-    if(balance.get(inputs.ticker)) {
-      inputs.amount += balance.get(inputs.ticker)
+    if (this.state.actionType === 1) {
+      if(balance.get(inputs.ticker)) {
+        inputs.amount += balance.get(inputs.ticker)
+      }
+      balance.set(inputs.ticker, inputs.amount);
+    } else if (this.state.actionType === 2) {
+      if(balance.get(inputs.ticker)){
+        if (balance.get(inputs.ticker) > inputs.amount) {
+          const result = balance.get(inputs.ticker) - inputs.amount;
+          balance.set(inputs.ticker, result);
+        } else {
+          balance.delete(inputs.ticker);
+        }
+      } else {
+        Swal({
+          type: 'error',
+          title: 'Oops...',
+          text: `You do not have ${inputs.ticker} balance!`
+      })
+      }
+    } else if (this.state.actionType === 3) {
+      balance.set(inputs.ticker, inputs.amount);
     }
-    balance.set(inputs.ticker, inputs.amount);
-    this.setState({ balance });
+    this.setState({ balance, actionType: 0 });
   }
 
   componentDidMount() {

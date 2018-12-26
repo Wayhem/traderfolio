@@ -85,14 +85,16 @@ class ModalContainer extends Container {
               return;
             }
             this.setState({ activeSuggestion: activeSuggestion - 1 });
-            document.querySelector('.suggestion-active').scrollIntoView();
+            let selection = document.querySelector('.suggestion-active');
+            selection ? selection.scrollIntoView() : selection = selection;
         }
         else if (e.keyCode === 40) {
             if (activeSuggestion - 1 === filteredSuggestions.length) {
                 return;
             }
             this.setState({ activeSuggestion: activeSuggestion + 1 });
-            document.querySelector('.suggestion-active').scrollIntoView();
+            let selection = document.querySelector('.suggestion-active');
+            selection ? selection.scrollIntoView() : selection = selection;
         }
     }
 

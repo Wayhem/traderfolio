@@ -14,13 +14,13 @@ class Sidebar extends Component{
                         <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" className="dropdown-toggle">Menu</a>
                         <ul className="collapse list-unstyled" id="homeSubmenu">
                             <li>
-                                <a onClick={this.props.handleModal} href="">Add Funds</a>
+                                <a onClick={e => this.props.handleModal(e, 1)} href="">Add Funds</a>
                             </li>
                             <li>
-                                <a href="#">Option 2</a>
+                                <a onClick={e=> this.props.handleModal(e, 2)} href="">Remove Funds</a>
                             </li>
                             <li>
-                                <a href="#">Option 3</a>
+                                <a onClick={e=> this.props.handleModal(e, 3)} href="">Edit Funds</a>
                             </li>
                         </ul>
                     </li>
