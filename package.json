@@ -4,9 +4,10 @@
   "description": "A personal portfolio for cryptocurrency traders",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --mode production",
+    "start": "node server.js",
     "build": "webpack-dev-server --mode production",
-    "dev": "webpack-dev-server --mode development"
+    "dev": "webpack-dev-server --mode development",
+    "heroku-postbuild": "webpack-dev-server --mode production"
   },
   "keywords": [
     "Trading",
@@ -32,6 +33,7 @@
     "webpack-dev-server": "^3.1.8"
   },
   "dependencies": {
+    "express": "^4.16.4",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "react-scripts": "^2.1.2",
