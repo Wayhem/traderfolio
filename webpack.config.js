@@ -26,8 +26,8 @@ module.exports = {
   },
   devServer: {
     contentBase: path.join(__dirname, "public/"),
-    port: process.env.PORT,
-    publicPath: `http://localhost:${process.env.PORT}/dist/`,
+    port: 3000,
+    publicPath: 'http://localhost:3000/dist/',
     hotOnly: true,
     disableHostCheck: true
   },
