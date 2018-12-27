@@ -4,8 +4,9 @@
   "description": "A personal portfolio for cryptocurrency traders",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --mode development",
-    "build": "webpack-dev-server --mode production"
+    "start": "webpack-dev-server --mode production",
+    "build": "webpack-dev-server --mode production",
+    "dev": "webpack-dev-server --mode development"
   },
   "keywords": [
     "Trading",
