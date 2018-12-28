@@ -155,6 +155,13 @@ ul ul a {
     right: 27%;
 }
 
+.navBtn {
+    display: none;
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    text-align: end;
+}
 
 @media (max-width: 768px) {
     #sidebar {
@@ -162,6 +169,21 @@ ul ul a {
     }
     #sidebarCollapse {
         display: none;
+    }
+    #navAdd {
+        display: inline-block;
+        bottom: 3rem;
+        right: 15rem;
+    }
+    #navRem{
+        display: inline-block;
+        bottom: 3rem;
+        right: 5.8rem;
+    }
+    #navEdit{
+        display: inline-block;
+        bottom: 3rem;
+        right: 2rem;
     }
 }
 
